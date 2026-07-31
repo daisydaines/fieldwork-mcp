@@ -12,7 +12,7 @@ Works with Claude, Cursor, Codex, and other AI apps that support [MCP](https://m
 Your AI asks Fieldwork. You get a clear answer.  
 **Read-only** — it can’t change jobs, charge cards, or edit customers.
 
-Pretty overview: [`landing/index.html`](landing/index.html) · Roadmap: [`ROADMAP.md`](ROADMAP.md)
+Site: [`landing/index.html`](landing/index.html) (Relay home) · [`landing/fieldwork.html`](landing/fieldwork.html) (Ask Fieldwork) · Roadmap: [`ROADMAP.md`](ROADMAP.md)
 
 ---
 

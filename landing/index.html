@@ -3,307 +3,169 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ask Fieldwork - Your pest business, in plain English</title>
+    <title>Relay - MCP tools for agents</title>
     <meta
       name="description"
-      content="Ask your Fieldwork account questions in plain English. Customers, money, chemicals, routes, and technicians. It looks things up. It does not change your account."
+      content="Relay builds MCP tools so Claude, ChatGPT, and Cursor can use real business software. Start with Ask Fieldwork."
+    />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Relay - MCP tools for agents" />
+    <meta
+      property="og:description"
+      content="Focused MCP servers that connect Claude, ChatGPT, and Cursor to the tools businesses already run."
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/daisydaines/fieldwork-mcp/main/landing/assets/og-relay.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Relay - MCP tools for agents" />
+    <meta
+      name="twitter:description"
+      content="Focused MCP servers that connect Claude, ChatGPT, and Cursor to the tools businesses already run."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/daisydaines/fieldwork-mcp/main/landing/assets/og-relay.png"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:opsz,ital,wght@8..60,0,400;8..60,0,600;8..60,1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="noise" aria-hidden="true"></div>
+    <div class="glow" aria-hidden="true"></div>
 
-    <header class="top">
-      <a class="brand" href="#top">Ask Fieldwork</a>
+    <header class="nav">
+      <a class="logo" href="./index.html">Relay</a>
       <nav>
-        <a href="#ask">Examples</a>
-        <a class="nav-cta" href="#setup">Get started</a>
+        <a href="#mcps">MCPs</a>
+        <a href="https://github.com/daisydaines/fieldwork-mcp" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="nav-btn" href="./fieldwork.html">Ask Fieldwork</a>
       </nav>
     </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">For Fieldwork pest and lawn owners</p>
-          <h1>Ask your business anything.</h1>
-          <p class="lede">
-            Hook Fieldwork up to Claude or ChatGPT. Then ask like you’d text a manager:
-            who’s on the schedule, who owes you money, how much chemical you used, which tech ran the most jobs.
+    <main>
+      <section class="hero-stage">
+        <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+        <div class="hero-veil" aria-hidden="true"></div>
+        <div class="hero">
+          <p class="eyebrow reveal" style="--d: 0">MCP tools for agents</p>
+          <h1 class="reveal" style="--d: 1">Software your AI can actually use.</h1>
+          <p class="lede reveal" style="--d: 2">
+            Relay builds focused MCP servers that connect Claude, ChatGPT, and Cursor
+            to the tools businesses already run. Clean setup. Plain-English tools.
           </p>
-          <div class="cta-row">
-            <a class="btn primary" href="#setup">Get started</a>
-            <a class="btn ghost" href="#ask">See example questions</a>
-          </div>
-          <p class="trust">It looks things up. It won’t change jobs, customers, or payments. Works with:</p>
-          <ul class="logo-row" aria-label="Supported apps">
-            <li>
-              <img class="logo-img" src="./assets/claude.svg" alt="Claude" width="22" height="22" />
-              Claude
-            </li>
-            <li>
-              <img class="logo-img" src="./assets/codex.svg" alt="ChatGPT" width="22" height="22" />
-              ChatGPT
-            </li>
-            <li>
-              <img class="logo-img" src="./assets/cursor.svg" alt="Cursor" width="22" height="22" />
-              Cursor
-            </li>
-          </ul>
-        </div>
-
-        <div class="hero-visual">
-          <div class="chat" id="demo-chat" aria-live="polite">
-            <div class="chat-header">
-              <span class="dot"></span>
-              <span>Example chat</span>
-              <span class="chat-hint">sample answers</span>
-            </div>
-            <div class="chat-stream" id="chat-stream"></div>
+          <div class="cta-row reveal" style="--d: 3">
+            <a class="btn primary" href="#mcps">Browse MCPs</a>
+            <a class="btn ghost" href="./fieldwork.html">Open Ask Fieldwork</a>
           </div>
         </div>
       </section>
 
-      <section class="strip" id="ask">
-        <h2>Try asking</h2>
-        <p class="section-lede">One example at a time. Copy it after you finish setup.</p>
-
-        <div class="ask-simple" id="ask-simple">
-          <p class="ask-simple-q" id="ask-q">Who owes me money?</p>
-          <div class="ask-simple-actions">
-            <button type="button" class="btn primary" id="ask-copy">Copy</button>
-            <button type="button" class="btn ghost" id="ask-next">Next</button>
-            <span class="ask-simple-count" id="ask-count" aria-live="polite">1 / 12</span>
-          </div>
-          <p class="ask-toast" id="ask-toast" hidden>Copied</p>
+      <section class="install reveal" style="--d: 4" aria-label="Ask your agent">
+        <div class="install-bar">
+          <span class="install-label">ask</span>
+          <code id="install-line">Clone https://github.com/daisydaines/fieldwork-mcp and set up Ask Fieldwork for me. I’m not a developer.</code>
+          <button
+            type="button"
+            class="install-copy"
+            data-copy="Clone https://github.com/daisydaines/fieldwork-mcp and set up Ask Fieldwork for me. I’m not a developer."
+          >
+            Copy
+          </button>
         </div>
+        <p class="install-note">Paste that into Claude Code, Codex, or Cursor. It downloads and wires Fieldwork for you.</p>
       </section>
 
-      <section class="setup" id="setup">
-        <h2>Get started</h2>
-        <p class="section-lede">A few minutes the first time. Then you just ask.</p>
+      <section class="mcps" id="mcps">
+        <div class="section-head">
+          <h2>MCPs</h2>
+          <p>Start with one. Add more as you need them.</p>
+        </div>
 
-        <ol class="steps">
-          <li class="step">
-            <span class="num">1</span>
-            <div>
-              <h3>Copy your Fieldwork key</h3>
-              <p>
-                Fieldwork gives you a private key after you sign in. Treat it like a password.
-              </p>
-              <ol class="substeps">
-                <li>
-                  Open
-                  <a
-                    class="text-link"
-                    href="https://api3.fieldworkhq.com/base"
-                    target="_blank"
-                    rel="noreferrer"
-                    >Fieldwork’s key page</a
-                  >
-                  (or open their
-                  <a
-                    class="text-link"
-                    href="https://intercom.help/fieldwork/en/articles/2406552-fieldwork-apis"
-                    target="_blank"
-                    rel="noreferrer"
-                    >API help article</a
-                  >
-                  and click <strong>base</strong>).
-                </li>
-                <li>Log in with your Fieldwork username and password.</li>
-                <li>Copy the private key it shows you. Don’t text it to anyone.</li>
-              </ol>
-              <p class="fine">
-                Or inside the Fieldwork app:
-                <a
-                  class="text-link"
-                  href="https://app.fieldworkhq.com/settings/users"
-                  target="_blank"
-                  rel="noreferrer"
-                  >Settings → Users &amp; Routes → Integration</a
-                >.
-              </p>
+        <div class="mcp-grid mcp-grid-two">
+          <a class="mcp-card live" href="./fieldwork.html">
+            <div class="mcp-card-top">
+              <span class="status live">Live</span>
+              <span class="mcp-arrow" aria-hidden="true">→</span>
             </div>
-          </li>
-
-          <li class="step">
-            <span class="num">2</span>
-            <div>
-              <h3>Ask your AI to finish setup</h3>
-              <p>
-                Click your app. Paste the green box. Your AI downloads Ask Fieldwork and wires it up.
-                You only paste your Fieldwork key when it tells you where.
-              </p>
-
-              <div class="client-tabs setup-tabs" role="tablist" aria-label="AI apps">
-                <button type="button" class="client-tab active" data-client="claude">
-                  <img class="logo-img" src="./assets/claude.svg" alt="" width="18" height="18" />
-                  Claude
-                </button>
-                <button type="button" class="client-tab" data-client="chatgpt">
-                  <img class="logo-img" src="./assets/codex.svg" alt="" width="18" height="18" />
-                  ChatGPT
-                </button>
-                <button type="button" class="client-tab" data-client="cursor">
-                  <img class="logo-img" src="./assets/cursor.svg" alt="" width="18" height="18" />
-                  Cursor
-                </button>
-              </div>
-
-              <div class="client-panel active" data-panel="claude">
-                <ol class="substeps">
-                  <li>Open the Claude desktop app.</li>
-                  <li>Start <strong>Claude Code</strong> (not a normal chat).</li>
-                  <li>Paste the green box below.</li>
-                  <li>When it asks for your Fieldwork key, paste the key where it tells you. Don’t paste the key into the chat.</li>
-                </ol>
-                <div class="ask-agent">
-                  <p>Ask Claude Code:</p>
-                  <div class="copy-block">
-                    <pre><code id="ask-claude">Clone https://github.com/daisydaines/fieldwork-mcp and set up Ask Fieldwork end to end. I’m a pest control owner, not a developer. When you need my Fieldwork key, tell me exactly which file to open and where to paste it. Don’t print or save the key in chat. Then tell me what to ask next.</code></pre>
-                    <button type="button" class="btn secondary copy-btn" data-copy="#ask-claude">Copy</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="client-panel" data-panel="chatgpt">
-                <ol class="substeps">
-                  <li>Open <strong>Codex</strong> (ChatGPT’s coding agent). Normal ChatGPT chat won’t work for this.</li>
-                  <li>Paste the green box below.</li>
-                  <li>When it asks for your Fieldwork key, paste the key where it tells you. Don’t paste the key into the chat.</li>
-                </ol>
-                <div class="ask-agent">
-                  <p>Ask Codex:</p>
-                  <div class="copy-block">
-                    <pre><code id="ask-codex">Clone https://github.com/daisydaines/fieldwork-mcp and set up Ask Fieldwork end to end. I’m a pest control owner, not a developer. When you need my Fieldwork key, tell me exactly which file to open and where to paste it. Don’t print or save the key in chat. Then tell me what to ask next.</code></pre>
-                    <button type="button" class="btn secondary copy-btn" data-copy="#ask-codex">Copy</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="client-panel" data-panel="cursor">
-                <ol class="substeps">
-                  <li>Open Cursor.</li>
-                  <li>Start a new agent chat.</li>
-                  <li>Paste the green box below.</li>
-                  <li>When it asks for your Fieldwork key, paste the key where it tells you. Don’t paste the key into the chat.</li>
-                </ol>
-                <div class="ask-agent">
-                  <p>Ask Cursor:</p>
-                  <div class="copy-block">
-                    <pre><code id="ask-cursor">Clone https://github.com/daisydaines/fieldwork-mcp and set up Ask Fieldwork end to end. I’m a pest control owner, not a developer. When you need my Fieldwork key, tell me exactly which file to open and where to paste it. Don’t print or save the key in chat. Then tell me what to ask next.</code></pre>
-                    <button type="button" class="btn secondary copy-btn" data-copy="#ask-cursor">Copy</button>
-                  </div>
-                </div>
-              </div>
+            <h3>Ask Fieldwork</h3>
+            <p>
+              Ask your pest and lawn business questions in plain English.
+              Customers, money, chemicals, routes, technicians. Looks things up. Won’t change your account.
+            </p>
+            <div class="mcp-meta">
+              <span>Fieldwork</span>
+              <span>Looks up only</span>
+              <span>Claude · ChatGPT · Cursor</span>
             </div>
-          </li>
+          </a>
 
-          <li class="step">
-            <span class="num">3</span>
-            <div>
-              <h3>Restart, then ask</h3>
-              <p>Fully quit and reopen the app. Then try:</p>
-              <div class="copy-block">
-                <pre><code id="q1">How many customers do I have?</code></pre>
-                <button type="button" class="btn secondary copy-btn" data-copy="#q1">Copy</button>
-              </div>
-              <div class="ask-agent">
-                <p>If it still can’t see Fieldwork:</p>
-                <div class="copy-block">
-                  <pre><code id="ask-debug">Ask Fieldwork isn’t using my real data. I’m not a developer. Fix the smallest thing. Don’t print my key.</code></pre>
-                  <button type="button" class="btn secondary copy-btn" data-copy="#ask-debug">Copy</button>
-                </div>
-              </div>
+          <article class="mcp-card soon">
+            <div class="mcp-card-top">
+              <span class="status soon">Soon</span>
             </div>
-          </li>
-        </ol>
-      </section>
-
-      <section class="promise">
-        <h2>Why owners trust it</h2>
-        <div class="promise-grid">
-          <article>
-            <h3>It won’t change your account</h3>
-            <p>It can look things up. It cannot edit customers, cancel jobs, or take payments.</p>
-          </article>
-          <article>
-            <h3>Your key stays on your computer</h3>
-            <p>This website never asks for your Fieldwork key. You save it on your own machine.</p>
-          </article>
-          <article>
-            <h3>Ask like a person</h3>
-            <p>No reports menu. No filters. Just type the question you’d ask your office manager.</p>
+            <h3>More coming</h3>
+            <p>
+              Next Relay MCPs will follow the same idea: plain-English tools for the software you already run.
+              Have a tool you want wired up? Open an issue on GitHub.
+            </p>
+            <div class="mcp-meta">
+              <a
+                class="meta-link"
+                href="https://github.com/daisydaines/fieldwork-mcp/issues"
+                target="_blank"
+                rel="noreferrer"
+                >Request an MCP</a
+              >
+            </div>
           </article>
         </div>
       </section>
 
-      <section class="faq">
-        <h2>Common worries</h2>
-        <details>
-          <summary>I’m not a computer person. Can I still do this?</summary>
-          <p>
-            Yes. Copy your Fieldwork key, click your app in step 2, paste the green box,
-            and follow what it tells you. After that, you only ask business questions.
-          </p>
-        </details>
-        <details>
-          <summary>Can this mess up my customers or schedule?</summary>
-          <p>
-            No. It can look up customers, money, jobs, chemicals, routes, and techs.
-            It cannot create customers, cancel jobs, or take payments.
-          </p>
-        </details>
-        <details>
-          <summary>Where does my Fieldwork key go?</summary>
-          <p>
-            On your computer, in a private file. Your AI will show you exactly which file
-            and where to paste. Not on this website. Don’t paste the key into the chat.
-          </p>
-        </details>
-        <details>
-          <summary>Why do I have to copy a key at all?</summary>
-          <p>
-            That’s how Fieldwork lets outside tools look at your account.
-            You copy it once from Settings. After that, you just ask questions.
-          </p>
-        </details>
-        <details>
-          <summary>What if I get stuck?</summary>
-          <p>In Claude Code, Codex, or Cursor, paste:</p>
-          <div class="copy-block">
-            <pre><code id="ask-stuck">I’m stuck setting up Ask Fieldwork. I’m not a developer. Tell me the next single step.</code></pre>
-            <button type="button" class="btn secondary copy-btn" data-copy="#ask-stuck">Copy</button>
-          </div>
-        </details>
-        <details>
-          <summary>Is this made by Fieldwork?</summary>
-          <p>
-            No. It’s an independent helper that talks to Fieldwork using their normal account tools.
-            Follow Fieldwork’s rules for your account.
-          </p>
-        </details>
+      <section class="works">
+        <div class="section-head">
+          <h2>Works where you already chat</h2>
+          <p>No new dashboard for your day-to-day. Use the AI app you already have.</p>
+        </div>
+        <ul class="works-row">
+          <li>
+            <img src="./assets/claude.svg" alt="" width="22" height="22" />
+            Claude
+          </li>
+          <li>
+            <img src="./assets/codex.svg" alt="" width="22" height="22" />
+            ChatGPT
+          </li>
+          <li>
+            <img src="./assets/cursor.svg" alt="" width="22" height="22" />
+            Cursor
+          </li>
+        </ul>
       </section>
 
       <section class="finale">
-        <h2>Your Fieldwork answers. One question away.</h2>
-        <p>Looks things up. Speaks plain English. Built for owners.</p>
-        <a class="btn primary" href="#setup">Get started</a>
+        <h2>Start with Fieldwork.</h2>
+        <p>The first Relay MCP. More tools for agents next.</p>
+        <a class="btn primary" href="./fieldwork.html">Open Ask Fieldwork</a>
       </section>
     </main>
 
-    <footer>
-      <span>Ask Fieldwork</span>
-      <a href="#setup">Get started</a>
-      <a href="https://fieldworkhq.com/" target="_blank" rel="noreferrer">Fieldwork</a>
+    <footer class="footer">
+      <a class="logo" href="./index.html">Relay</a>
+      <div class="footer-links">
+        <a href="#mcps">MCPs</a>
+        <a href="./fieldwork.html">Ask Fieldwork</a>
+        <a href="https://github.com/daisydaines/fieldwork-mcp" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
     </footer>
 
+    <script src="./hero.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>
