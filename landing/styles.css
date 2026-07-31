@@ -445,23 +445,16 @@ a.dir-row:hover {
 
 .meta-brand {
   display: block;
-  height: 1.2rem;
+  height: 1.35rem;
   width: auto;
   object-fit: contain;
-  opacity: 0.95;
+  opacity: 1;
 }
 
-.meta-brand-fieldwork {
-  height: 1.15rem;
-}
-
-.meta-brand-fieldroutes {
-  height: 1.2rem;
-}
-
+.meta-brand-fieldwork,
+.meta-brand-fieldroutes,
 .meta-brand-gorilladesk {
   height: 1.35rem;
-  opacity: 1;
 }
 
 .meta-agents {
