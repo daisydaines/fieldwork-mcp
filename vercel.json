@@ -5,6 +5,7 @@
   "outputDirectory": "landing",
   "rewrites": [
     { "source": "/fieldwork", "destination": "/fieldwork.html" },
-    { "source": "/fieldroutes", "destination": "/fieldroutes.html" }
+    { "source": "/fieldroutes", "destination": "/fieldroutes.html" },
+    { "source": "/gorilladesk", "destination": "/gorilladesk.html" }
   ]
 }

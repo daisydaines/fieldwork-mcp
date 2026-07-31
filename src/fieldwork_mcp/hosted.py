@@ -135,6 +135,19 @@ def register_connect_routes(vault: Vault) -> None:
         _fieldroutes_page
     )
 
+    async def _gorilladesk_page(_: Request) -> Response:
+        path = _safe_landing_file("gorilladesk.html")
+        if path is None:
+            return JSONResponse({"error": "Landing not packaged"}, status_code=404)
+        return _file_response(path)
+
+    mcp.custom_route("/gorilladesk.html", methods=["GET"], name="site_gorilladesk")(
+        _gorilladesk_page
+    )
+    mcp.custom_route("/gorilladesk", methods=["GET"], name="site_gorilladesk_short")(
+        _gorilladesk_page
+    )
+
     @mcp.custom_route("/styles.css", methods=["GET"], name="site_styles")
     async def site_styles(_: Request) -> Response:
         path = _safe_landing_file("styles.css")
@@ -152,6 +165,13 @@ def register_connect_routes(vault: Vault) -> None:
     @mcp.custom_route("/fieldroutes.css", methods=["GET"], name="site_fieldroutes_css")
     async def site_fieldroutes_css(_: Request) -> Response:
         path = _safe_landing_file("fieldroutes.css")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/gorilladesk.css", methods=["GET"], name="site_gorilladesk_css")
+    async def site_gorilladesk_css(_: Request) -> Response:
+        path = _safe_landing_file("gorilladesk.css")
         if path is None:
             return JSONResponse({"error": "not found"}, status_code=404)
         return _file_response(path)
@@ -180,6 +200,13 @@ def register_connect_routes(vault: Vault) -> None:
     @mcp.custom_route("/fieldwork.js", methods=["GET"], name="site_fieldwork_js")
     async def site_fieldwork_js(_: Request) -> Response:
         path = _safe_landing_file("fieldwork.js")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/gorilladesk.js", methods=["GET"], name="site_gorilladesk_js")
+    async def site_gorilladesk_js(_: Request) -> Response:
+        path = _safe_landing_file("gorilladesk.js")
         if path is None:
             return JSONResponse({"error": "not found"}, status_code=404)
         return _file_response(path)

@@ -459,6 +459,10 @@ a.dir-row:hover {
   height: 1.2rem;
 }
 
+.meta-brand-gorilladesk {
+  height: 1.2rem;
+}
+
 .meta-agents {
   display: inline-flex;
   align-items: center;

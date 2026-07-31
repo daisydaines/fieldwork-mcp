@@ -36,3 +36,5 @@ htmlcov/
 .vscode/
 *.swp
 *~
+.vercel
+.env*
