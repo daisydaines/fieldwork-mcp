@@ -14,7 +14,8 @@ That’s the right product brain. What’s left is making it as easy as
 | Prompt: `monday_morning_briefing` | Done |
 | Local **streamable-http** transport | Done (`./scripts/run_mcp_http.sh`) |
 | `/connect` vault (paste API key → bearer token) | Done |
-| Remote hosted MCP URL (public HTTPS) | Next |
+| Landing served from hosted MCP (`/`, `/fieldwork`) | Done |
+| Remote hosted MCP URL (public HTTPS) | Next (Dockerfile ready) |
 | True Fieldwork OAuth login popup | Blocked (Fieldwork has no third-party OAuth app) |
 | Progressive tool loading | Later (when tool count gets huge) |
 

@@ -119,7 +119,7 @@ claude mcp add fieldwork -- /ABS/PATH/TO/fieldwork-mcp/scripts/run_mcp.sh
 
 Then restart the app and ask: *How many customers do I have?*
 
-### Optional: hosted connect (no Dropbox-style OAuth)
+### Hosted connect (no Dropbox-style OAuth)
 
 Fieldwork does not offer a third-party OAuth login popup. Closest path:
 
@@ -129,7 +129,16 @@ Fieldwork does not offer a third-party OAuth login popup. Closest path:
 ```
 
 Paste your API key once. You get a bearer token and a one-line snippet for Claude / Cursor / Codex.
-MCP endpoint: `http://127.0.0.1:8000/mcp` with `Authorization: Bearer <token>`.
+Also serves the Relay landing at `/`.
+
+| URL | What |
+| --- | --- |
+| `http://127.0.0.1:8000/` | Landing |
+| `http://127.0.0.1:8000/connect` | Paste API key → connect token |
+| `http://127.0.0.1:8000/mcp` | Streamable HTTP MCP (`Authorization: Bearer <token>`) |
+
+For a shared deploy, set `FIELDWORK_VAULT_SECRET` (required) and `FIELDWORK_PUBLIC_BASE_URL`
+(e.g. `https://mcp.example.com`). See `Dockerfile`. Keep `FIELDWORK_MCP_ALLOW_ENV_FALLBACK=0`.
 
 ---
 

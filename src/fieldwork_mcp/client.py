@@ -74,7 +74,7 @@ class FieldworkClient:
     def _headers(self) -> dict[str, str]:
         headers = {
             "Accept": "application/json",
-            "User-Agent": "fieldwork-mcp/0.1.0 (+https://github.com/PLACEHOLDER/fieldwork-mcp)",
+            "User-Agent": "fieldwork-mcp/0.1.0 (+https://github.com/daisydaines/fieldwork-mcp)",
         }
         if self.auth_scheme == "api-key":
             headers["api-key"] = self.api_key or ""

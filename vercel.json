@@ -1,0 +1,9 @@
+{
+  "framework": null,
+  "installCommand": null,
+  "buildCommand": null,
+  "outputDirectory": "landing",
+  "rewrites": [
+    { "source": "/fieldwork", "destination": "/fieldwork.html" }
+  ]
+}

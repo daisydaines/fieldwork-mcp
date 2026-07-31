@@ -6,12 +6,13 @@ Owners paste an API key once; we mint a bearer token for Streamable HTTP MCP.
 
 from __future__ import annotations
 
+import mimetypes
 import os
 from pathlib import Path
 
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
-from starlette.responses import HTMLResponse, JSONResponse, Response
+from starlette.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from starlette.types import ASGIApp
 
 from . import context
@@ -21,6 +22,28 @@ from .server import mcp
 from .vault import Vault
 
 CONNECT_HTML = Path(__file__).with_name("connect_page.html")
+
+
+def _landing_dir() -> Path | None:
+    override = os.environ.get("FIELDWORK_LANDING_DIR", "").strip()
+    if override:
+        path = Path(override).expanduser().resolve()
+        return path if path.is_dir() else None
+    # src/fieldwork_mcp/hosted.py -> repo root / landing
+    candidate = Path(__file__).resolve().parents[2] / "landing"
+    return candidate if candidate.is_dir() else None
+
+
+def _safe_landing_file(rel: str) -> Path | None:
+    root = _landing_dir()
+    if root is None:
+        return None
+    path = (root / rel).resolve()
+    try:
+        path.relative_to(root.resolve())
+    except ValueError:
+        return None
+    return path if path.is_file() else None
 
 
 class BearerVaultMiddleware(BaseHTTPMiddleware):
@@ -68,7 +91,66 @@ def _public_base(request: Request) -> str:
     return str(request.base_url).rstrip("/")
 
 
+def _file_response(path: Path) -> FileResponse:
+    media, _ = mimetypes.guess_type(str(path))
+    return FileResponse(path, media_type=media or "application/octet-stream")
+
+
 def register_connect_routes(vault: Vault) -> None:
+    @mcp.custom_route("/", methods=["GET"], name="site_home")
+    async def site_home(_: Request) -> Response:
+        path = _safe_landing_file("index.html")
+        if path is None:
+            return HTMLResponse(
+                "<p>Relay MCP is up. Open <a href='/connect'>/connect</a>.</p>"
+            )
+        return _file_response(path)
+
+    @mcp.custom_route("/index.html", methods=["GET"], name="site_index")
+    async def site_index(_: Request) -> Response:
+        path = _safe_landing_file("index.html")
+        if path is None:
+            return JSONResponse({"error": "Landing not packaged"}, status_code=404)
+        return _file_response(path)
+
+    async def _fieldwork_page(_: Request) -> Response:
+        path = _safe_landing_file("fieldwork.html")
+        if path is None:
+            return JSONResponse({"error": "Landing not packaged"}, status_code=404)
+        return _file_response(path)
+
+    mcp.custom_route("/fieldwork.html", methods=["GET"], name="site_fieldwork")(_fieldwork_page)
+    mcp.custom_route("/fieldwork", methods=["GET"], name="site_fieldwork_short")(_fieldwork_page)
+
+    @mcp.custom_route("/styles.css", methods=["GET"], name="site_styles")
+    async def site_styles(_: Request) -> Response:
+        path = _safe_landing_file("styles.css")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/fieldwork.css", methods=["GET"], name="site_fieldwork_css")
+    async def site_fieldwork_css(_: Request) -> Response:
+        path = _safe_landing_file("fieldwork.css")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/hero.js", methods=["GET"], name="site_hero_js")
+    async def site_hero_js(_: Request) -> Response:
+        path = _safe_landing_file("hero.js")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/assets/{path:path}", methods=["GET"], name="site_assets")
+    async def site_assets(request: Request) -> Response:
+        rel = request.path_params.get("path") or ""
+        path = _safe_landing_file(f"assets/{rel}")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
     @mcp.custom_route("/connect", methods=["GET"], name="connect_page")
     async def connect_page(_: Request) -> Response:
         html = CONNECT_HTML.read_text(encoding="utf-8")
@@ -149,6 +231,7 @@ def run_hosted(transport: str = "streamable-http") -> None:
     port = int(os.environ.get("FIELDWORK_MCP_PORT", "8000"))
     print(
         f"fieldwork-mcp hosted on http://{host}:{port}\n"
+        f"  Site:       http://{host}:{port}/\n"
         f"  Connect UI: http://{host}:{port}/connect\n"
         f"  MCP:        http://{host}:{port}/mcp",
         flush=True,

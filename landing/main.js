@@ -15,8 +15,7 @@
     });
   });
 
-  // Soft scroll reveal for lower sections.
-  const nodes = document.querySelectorAll(".mcp-card, .works, .finale, .section-head");
+  const nodes = document.querySelectorAll(".dir-row, .works, .finale, .section-head, .term");
   if ("IntersectionObserver" in window && nodes.length) {
     const io = new IntersectionObserver(
       (entries) => {
@@ -26,7 +25,7 @@
           io.unobserve(entry.target);
         });
       },
-      { threshold: 0.16 },
+      { threshold: 0.14 },
     );
     nodes.forEach((node) => {
       node.classList.add("await-in");

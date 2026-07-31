@@ -3,145 +3,336 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Connect Fieldwork MCP</title>
+    <title>connect - relay.mcp</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        --bg: #e8e2d6;
-        --ink: #142019;
-        --pine: #1f4d38;
-        --foam: #f6f1e7;
-        --soft: #3a4a40;
-        --line: rgba(20, 32, 25, 0.14);
-        --font: "Bricolage Grotesque", Georgia, sans-serif;
-        --body: Georgia, serif;
+        --bg: #050506;
+        --bg-elev: #0c0c0e;
+        --line: rgba(255, 255, 255, 0.09);
+        --line-strong: rgba(255, 255, 255, 0.16);
+        --ink: #ececec;
+        --muted: #9a9aa3;
+        --faint: #6b6b76;
+        --coral: #e88c7a;
+        --live: #3dffa8;
+        --font: "Space Grotesk", "Segoe UI", sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, monospace;
+        --r: 6px;
+      }
+      * {
+        box-sizing: border-box;
       }
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: var(--body);
+        font-family: var(--mono);
         color: var(--ink);
-        background: radial-gradient(900px 400px at 10% 0%, rgba(47, 107, 79, 0.16), transparent),
-          var(--bg);
-        padding: 2.5rem 1.25rem 4rem;
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+      }
+      .grid-bg {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          radial-gradient(700px 360px at 80% 0%, rgba(232, 140, 122, 0.12), transparent 55%);
+        background-size: 48px 48px, 48px 48px, auto;
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 15%, transparent 75%);
+      }
+      .nav {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.95rem 5vw;
+        border-bottom: 1px solid var(--line);
+        background: rgba(5, 5, 6, 0.72);
+        backdrop-filter: blur(12px);
+      }
+      .logo {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .logo-mark {
+        color: var(--coral);
+        margin-right: 0.35rem;
+      }
+      .logo-ext {
+        color: var(--faint);
+      }
+      .nav a:not(.logo) {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.82rem;
+      }
+      .nav a:not(.logo):hover {
+        color: var(--ink);
       }
       main {
-        max-width: 40rem;
+        position: relative;
+        z-index: 1;
+        max-width: 36rem;
         margin: 0 auto;
-        background: var(--foam);
-        border: 1px solid var(--line);
-        border-radius: 1.4rem;
-        padding: 1.75rem;
-        box-shadow: 0 20px 50px rgba(20, 32, 25, 0.1);
+        padding: 3.25rem 1.25rem 5rem;
+      }
+      .eyebrow {
+        margin: 0 0 0.75rem;
+        color: var(--faint);
+        font-size: 0.78rem;
+      }
+      .tok {
+        color: var(--coral);
       }
       h1 {
+        margin: 0 0 0.75rem;
         font-family: var(--font);
-        letter-spacing: -0.03em;
-        margin: 0 0 0.5rem;
+        font-size: clamp(1.9rem, 5vw, 2.5rem);
+        letter-spacing: -0.045em;
+        line-height: 1.1;
       }
-      p {
-        color: var(--soft);
-        line-height: 1.5;
+      .lede {
+        margin: 0 0 1.6rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+      .card {
+        background: var(--bg-elev);
+        border: 1px solid var(--line-strong);
+        border-radius: var(--r);
+        padding: 1.25rem;
       }
       label {
         display: block;
-        font-family: var(--font);
-        font-weight: 700;
-        margin: 1.25rem 0 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--faint);
+        margin: 0 0 0.45rem;
       }
       input[type="password"],
       input[type="text"] {
         width: 100%;
-        padding: 0.85rem 0.9rem;
-        border-radius: 0.8rem;
+        padding: 0.8rem 0.9rem;
+        border-radius: var(--r);
         border: 1px solid var(--line);
-        font-size: 1rem;
-        box-sizing: border-box;
+        background: #08080a;
+        color: var(--ink);
+        font-family: var(--mono);
+        font-size: 0.85rem;
       }
-      button {
-        margin-top: 1.25rem;
-        font-family: var(--font);
-        font-weight: 700;
-        border: 0;
-        border-radius: 999px;
-        padding: 0.85rem 1.2rem;
-        background: var(--pine);
-        color: var(--foam);
+      input:focus {
+        outline: 1px solid rgba(232, 140, 122, 0.55);
+        border-color: transparent;
+      }
+      button,
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.95rem;
+        border: 1px solid var(--coral);
+        border-radius: var(--r);
+        padding: 0.7rem 1rem;
+        background: var(--coral);
+        color: #140c0a;
+        font: inherit;
+        font-weight: 600;
+        font-size: 0.82rem;
         cursor: pointer;
+        text-decoration: none;
+      }
+      button:hover,
+      .btn:hover {
+        background: #f0a090;
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: wait;
       }
       .note {
-        font-size: 0.92rem;
-        margin-top: 1rem;
+        margin: 1rem 0 0;
+        font-size: 0.78rem;
+        color: var(--faint);
+        line-height: 1.45;
+      }
+      .note a {
+        color: var(--coral);
+      }
+      .err {
+        display: none;
+        margin: 1rem 0 0;
+        color: #fca5a5;
+        font-size: 0.82rem;
+      }
+      .err.show {
+        display: block;
       }
       .result {
         display: none;
-        margin-top: 1.5rem;
+        margin-top: 1.4rem;
         padding-top: 1.25rem;
         border-top: 1px solid var(--line);
       }
       .result.show {
         display: block;
       }
+      .result h2 {
+        margin: 0 0 0.4rem;
+        font-family: var(--font);
+        font-size: 1.2rem;
+        letter-spacing: -0.03em;
+      }
+      .ok {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin: 0 0 0.85rem;
+        color: var(--live);
+        font-size: 0.78rem;
+        font-weight: 600;
+      }
+      .ok::before {
+        content: "●";
+      }
+      .snippet {
+        margin-top: 1rem;
+      }
+      .snippet-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.4rem;
+      }
+      .snippet-head span {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--faint);
+      }
+      .copy-btn {
+        margin: 0;
+        padding: 0.3rem 0.55rem;
+        font-size: 0.72rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--line);
+      }
+      .copy-btn:hover {
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.03);
+      }
       pre {
-        background: #1a2420;
-        color: #e7efe9;
-        border-radius: 0.9rem;
-        padding: 0.9rem;
+        margin: 0;
+        background: #08080a;
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        padding: 0.85rem;
         overflow-x: auto;
-        font-size: 0.82rem;
-      }
-      .err {
-        color: #9b2c2c;
-        display: none;
-      }
-      .err.show {
-        display: block;
-      }
-      a {
-        color: var(--pine);
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        line-height: 1.45;
+        color: #e4e4e7;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
     </style>
   </head>
   <body>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <header class="nav">
+      <a class="logo" href="/"
+        ><span class="logo-mark">◆</span> relay<span class="logo-ext">.mcp</span></a
+      >
+      <a href="/fieldwork.html">/fieldwork</a>
+    </header>
     <main>
-      <h1>Connect Fieldwork</h1>
-      <p>
-        Paste your Fieldwork API key once. We verify it and give you a connect token
-        for Claude, Cursor, or Codex. Treat the key like a password.
-      </p>
-      <p class="note">
-        Get the key in Fieldwork:
-        <a href="https://app.fieldworkhq.com/settings/users" target="_blank" rel="noreferrer"
-          >Settings → Users &amp; Routes → Integration</a
-        >.
+      <p class="eyebrow"><span class="tok">$</span> connect ask-fieldwork</p>
+      <h1>Paste your Fieldwork key</h1>
+      <p class="lede">
+        We verify it against Fieldwork, encrypt it in a vault, and return a bearer token for
+        Claude, Cursor, or Codex.
       </p>
 
-      <form id="form">
-        <label for="api_key">Fieldwork API key</label>
-        <input id="api_key" name="api_key" type="password" autocomplete="off" required />
-        <button type="submit">Create connect token</button>
-      </form>
-      <p class="err" id="err"></p>
-
-      <div class="result" id="result">
-        <h2 style="font-family: var(--font); letter-spacing: -0.02em">You're connected</h2>
-        <p>Copy one of these into your AI app, then ask: “How many customers do I have?”</p>
-        <label>Claude Code</label>
-        <pre id="cmd-claude"></pre>
-        <label>Cursor / Codex / Claude Desktop (mcp.json)</label>
-        <pre id="cmd-json"></pre>
+      <div class="card">
+        <form id="form">
+          <label for="api_key">FIELDWORK_API_KEY</label>
+          <input
+            id="api_key"
+            name="api_key"
+            type="password"
+            autocomplete="off"
+            spellcheck="false"
+            required
+            placeholder="paste key"
+          />
+          <button type="submit" id="submit">$ create_token</button>
+        </form>
         <p class="note">
-          Keep this token private. It can read your Fieldwork data (read-only tools only).
+          Key source:
+          <a href="https://api3.fieldworkhq.com/base" target="_blank" rel="noreferrer"
+            >api3.fieldworkhq.com/base</a
+          >
+          or
+          <a href="https://app.fieldworkhq.com/settings/users" target="_blank" rel="noreferrer"
+            >Settings → Users &amp; Routes → Integration</a
+          >.
         </p>
+        <p class="err" id="err"></p>
+
+        <div class="result" id="result">
+          <p class="ok">connected</p>
+          <h2>Drop this into your agent</h2>
+          <p class="lede" style="margin-bottom: 0">
+            Then ask: “How many customers do I have?”
+          </p>
+
+          <div class="snippet">
+            <div class="snippet-head">
+              <span>// claude code</span>
+              <button type="button" class="copy-btn" data-copy="cmd-claude">copy</button>
+            </div>
+            <pre id="cmd-claude"></pre>
+          </div>
+
+          <div class="snippet">
+            <div class="snippet-head">
+              <span>// cursor / codex / desktop mcp.json</span>
+              <button type="button" class="copy-btn" data-copy="cmd-json">copy</button>
+            </div>
+            <pre id="cmd-json"></pre>
+          </div>
+
+          <p class="note">
+            Keep the token private. It can read Fieldwork data. It cannot change jobs, customers,
+            or payments.
+          </p>
+        </div>
       </div>
     </main>
     <script>
       const form = document.getElementById("form");
       const err = document.getElementById("err");
       const result = document.getElementById("result");
+      const submit = document.getElementById("submit");
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         err.classList.remove("show");
         result.classList.remove("show");
+        submit.disabled = true;
+        submit.textContent = "checking…";
         const api_key = document.getElementById("api_key").value.trim();
         try {
           const res = await fetch("/api/connect", {
@@ -152,12 +343,32 @@
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || "Connect failed");
           document.getElementById("cmd-claude").textContent = data.claude_code;
-          document.getElementById("cmd-json").textContent = JSON.stringify(data.mcp_json, null, 2);
+          document.getElementById("cmd-json").textContent = JSON.stringify(
+            data.mcp_json,
+            null,
+            2,
+          );
           result.classList.add("show");
+          result.scrollIntoView({ behavior: "smooth", block: "nearest" });
         } catch (ex) {
           err.textContent = ex.message || String(ex);
           err.classList.add("show");
+        } finally {
+          submit.disabled = false;
+          submit.textContent = "$ create_token";
         }
+      });
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const el = document.getElementById(btn.getAttribute("data-copy"));
+          await navigator.clipboard.writeText(el.textContent || "");
+          const prev = btn.textContent;
+          btn.textContent = "copied";
+          setTimeout(() => {
+            btn.textContent = prev;
+          }, 1200);
+        });
       });
     </script>
   </body>
