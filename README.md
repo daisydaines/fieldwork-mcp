@@ -83,7 +83,7 @@ Help: [Fieldwork APIs](https://intercom.help/fieldwork/en/articles/2406552-field
 ### 2. Install
 
 ```bash
-git clone https://github.com/YOUR_USER/fieldwork-mcp.git
+git clone https://github.com/daisydaines/fieldwork-mcp.git
 cd fieldwork-mcp
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
