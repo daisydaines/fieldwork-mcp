@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fieldwork": {
+      "command": "/ABS/PATH/TO/fieldwork-mcp/scripts/run_mcp.sh",
+      "env": {
+        "FIELDWORK_API_KEY": "YOUR_FIELDWORK_API_KEY",
+        "FIELDWORK_AUTH_SCHEME": "api-key"
+      }
+    }
+  }
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connect Fieldwork MCP</title>
+    <style>
+      :root {
+        --bg: #e8e2d6;
+        --ink: #142019;
+        --pine: #1f4d38;
+        --foam: #f6f1e7;
+        --soft: #3a4a40;
+        --line: rgba(20, 32, 25, 0.14);
+        --font: "Bricolage Grotesque", Georgia, sans-serif;
+        --body: Georgia, serif;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--body);
+        color: var(--ink);
+        background: radial-gradient(900px 400px at 10% 0%, rgba(47, 107, 79, 0.16), transparent),
+          var(--bg);
+        padding: 2.5rem 1.25rem 4rem;
+      }
+      main {
+        max-width: 40rem;
+        margin: 0 auto;
+        background: var(--foam);
+        border: 1px solid var(--line);
+        border-radius: 1.4rem;
+        padding: 1.75rem;
+        box-shadow: 0 20px 50px rgba(20, 32, 25, 0.1);
+      }
+      h1 {
+        font-family: var(--font);
+        letter-spacing: -0.03em;
+        margin: 0 0 0.5rem;
+      }
+      p {
+        color: var(--soft);
+        line-height: 1.5;
+      }
+      label {
+        display: block;
+        font-family: var(--font);
+        font-weight: 700;
+        margin: 1.25rem 0 0.4rem;
+      }
+      input[type="password"],
+      input[type="text"] {
+        width: 100%;
+        padding: 0.85rem 0.9rem;
+        border-radius: 0.8rem;
+        border: 1px solid var(--line);
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 1.25rem;
+        font-family: var(--font);
+        font-weight: 700;
+        border: 0;
+        border-radius: 999px;
+        padding: 0.85rem 1.2rem;
+        background: var(--pine);
+        color: var(--foam);
+        cursor: pointer;
+      }
+      .note {
+        font-size: 0.92rem;
+        margin-top: 1rem;
+      }
+      .result {
+        display: none;
+        margin-top: 1.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--line);
+      }
+      .result.show {
+        display: block;
+      }
+      pre {
+        background: #1a2420;
+        color: #e7efe9;
+        border-radius: 0.9rem;
+        padding: 0.9rem;
+        overflow-x: auto;
+        font-size: 0.82rem;
+      }
+      .err {
+        color: #9b2c2c;
+        display: none;
+      }
+      .err.show {
+        display: block;
+      }
+      a {
+        color: var(--pine);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Connect Fieldwork</h1>
+      <p>
+        Paste your Fieldwork API key once. We verify it and give you a connect token
+        for Claude, Cursor, or Codex. Treat the key like a password.
+      </p>
+      <p class="note">
+        Get the key in Fieldwork:
+        <a href="https://app.fieldworkhq.com/settings/users" target="_blank" rel="noreferrer"
+          >Settings → Users &amp; Routes → Integration</a
+        >.
+      </p>
+
+      <form id="form">
+        <label for="api_key">Fieldwork API key</label>
+        <input id="api_key" name="api_key" type="password" autocomplete="off" required />
+        <button type="submit">Create connect token</button>
+      </form>
+      <p class="err" id="err"></p>
+
+      <div class="result" id="result">
+        <h2 style="font-family: var(--font); letter-spacing: -0.02em">You're connected</h2>
+        <p>Copy one of these into your AI app, then ask: “How many customers do I have?”</p>
+        <label>Claude Code</label>
+        <pre id="cmd-claude"></pre>
+        <label>Cursor / Codex / Claude Desktop (mcp.json)</label>
+        <pre id="cmd-json"></pre>
+        <p class="note">
+          Keep this token private. It can read your Fieldwork data (read-only tools only).
+        </p>
+      </div>
+    </main>
+    <script>
+      const form = document.getElementById("form");
+      const err = document.getElementById("err");
+      const result = document.getElementById("result");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        err.classList.remove("show");
+        result.classList.remove("show");
+        const api_key = document.getElementById("api_key").value.trim();
+        try {
+          const res = await fetch("/api/connect", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ api_key }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Connect failed");
+          document.getElementById("cmd-claude").textContent = data.claude_code;
+          document.getElementById("cmd-json").textContent = JSON.stringify(data.mcp_json, null, 2);
+          result.classList.add("show");
+        } catch (ex) {
+          err.textContent = ex.message || String(ex);
+          err.classList.add("show");
+        }
+      });
+    </script>
+  </body>
+</html>

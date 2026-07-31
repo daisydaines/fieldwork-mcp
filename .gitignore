@@ -1,0 +1,38 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Local MCP path config (absolute machine paths)
+.cursor/mcp.json
+
+# Hosted connect vault (contains encrypted API keys)
+.data/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+dist/
+build/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.cache
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
