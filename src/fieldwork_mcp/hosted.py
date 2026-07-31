@@ -122,6 +122,19 @@ def register_connect_routes(vault: Vault) -> None:
     mcp.custom_route("/fieldwork.html", methods=["GET"], name="site_fieldwork")(_fieldwork_page)
     mcp.custom_route("/fieldwork", methods=["GET"], name="site_fieldwork_short")(_fieldwork_page)
 
+    async def _fieldroutes_page(_: Request) -> Response:
+        path = _safe_landing_file("fieldroutes.html")
+        if path is None:
+            return JSONResponse({"error": "Landing not packaged"}, status_code=404)
+        return _file_response(path)
+
+    mcp.custom_route("/fieldroutes.html", methods=["GET"], name="site_fieldroutes")(
+        _fieldroutes_page
+    )
+    mcp.custom_route("/fieldroutes", methods=["GET"], name="site_fieldroutes_short")(
+        _fieldroutes_page
+    )
+
     @mcp.custom_route("/styles.css", methods=["GET"], name="site_styles")
     async def site_styles(_: Request) -> Response:
         path = _safe_landing_file("styles.css")
@@ -136,9 +149,37 @@ def register_connect_routes(vault: Vault) -> None:
             return JSONResponse({"error": "not found"}, status_code=404)
         return _file_response(path)
 
+    @mcp.custom_route("/fieldroutes.css", methods=["GET"], name="site_fieldroutes_css")
+    async def site_fieldroutes_css(_: Request) -> Response:
+        path = _safe_landing_file("fieldroutes.css")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
     @mcp.custom_route("/hero.js", methods=["GET"], name="site_hero_js")
     async def site_hero_js(_: Request) -> Response:
         path = _safe_landing_file("hero.js")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/main.js", methods=["GET"], name="site_main_js")
+    async def site_main_js(_: Request) -> Response:
+        path = _safe_landing_file("main.js")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/fieldroutes.js", methods=["GET"], name="site_fieldroutes_js")
+    async def site_fieldroutes_js(_: Request) -> Response:
+        path = _safe_landing_file("fieldroutes.js")
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        return _file_response(path)
+
+    @mcp.custom_route("/fieldwork.js", methods=["GET"], name="site_fieldwork_js")
+    async def site_fieldwork_js(_: Request) -> Response:
+        path = _safe_landing_file("fieldwork.js")
         if path is None:
             return JSONResponse({"error": "not found"}, status_code=404)
         return _file_response(path)

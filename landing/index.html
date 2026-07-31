@@ -6,7 +6,7 @@
     <title>Relay - MCP tools for agents</title>
     <meta
       name="description"
-      content="Relay builds MCP tools so Claude, ChatGPT, and Cursor can use real business software. Start with Ask Fieldwork."
+      content="Relay builds MCP tools so Claude, ChatGPT, and Cursor can use real business software. Ask Fieldwork and Ask FieldRoutes."
     />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
@@ -68,8 +68,9 @@
             connect flow. No new dashboard.
           </p>
           <div class="cta-row reveal" style="--d: 4">
-            <a class="btn primary" href="/connect" data-connect>$ connect fieldwork</a>
-            <a class="btn ghost" href="./fieldwork.html">docs / ask fieldwork</a>
+            <a class="btn primary" href="#mcps">$ browse mcps</a>
+            <a class="btn ghost" href="./fieldwork.html">/fieldwork</a>
+            <a class="btn ghost" href="./fieldroutes.html">/fieldroutes</a>
           </div>
         </div>
       </section>
@@ -83,13 +84,13 @@
           <div class="term-body">
             <div class="term-line">
               <span class="prompt">$</span>
-              <code>open /connect && paste FIELDWORK_API_KEY</code>
+              <code>open /fieldwork or /fieldroutes → connect</code>
             </div>
             <div class="term-line muted">
               <span class="prompt">→</span>
               <span>encrypted vault · bearer token · claude / cursor / codex</span>
             </div>
-            <a class="term-cta" href="/connect" data-connect>run →</a>
+            <a class="term-cta" href="#mcps">pick an mcp →</a>
           </div>
         </div>
       </section>
@@ -119,19 +120,13 @@
             </div>
           </a>
 
-          <a
-            class="dir-row"
-            href="https://fieldroutes-mcp-three.vercel.app/fieldroutes"
-            role="listitem"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a class="dir-row" href="./fieldroutes.html" role="listitem">
             <div class="dir-main">
               <span class="dir-status live">● live</span>
               <h3>ask-fieldroutes</h3>
               <p>
-                Sister product for FieldRoutes. Customers, AR, schedule, routes, techs. Same
-                /connect vault pattern.
+                Pest &amp; lawn ops over FieldRoutes. Customers, AR, schedule, routes, techs.
+                Lookup only.
               </p>
             </div>
             <div class="dir-meta">
@@ -168,11 +163,11 @@
 
       <section class="finale">
         <p class="sec-label"><span class="tok">03</span> // start</p>
-        <h2>boot ask-fieldwork</h2>
-        <p>First Relay MCP. More agent tools next.</p>
+        <h2>pick an mcp</h2>
+        <p>Relay home. Product pages below.</p>
         <div class="cta-row">
-          <a class="btn primary" href="/connect" data-connect>$ connect</a>
-          <a class="btn ghost" href="./fieldwork.html">read the docs</a>
+          <a class="btn primary" href="./fieldwork.html">/fieldwork</a>
+          <a class="btn ghost" href="./fieldroutes.html">/fieldroutes</a>
         </div>
       </section>
     </main>
@@ -184,7 +179,7 @@
       <div class="footer-links">
         <a href="#mcps">/mcps</a>
         <a href="./fieldwork.html">/fieldwork</a>
-        <a href="/connect" data-connect>/connect</a>
+        <a href="./fieldroutes.html">/fieldroutes</a>
         <a href="https://github.com/daisydaines/fieldwork-mcp" target="_blank" rel="noreferrer"
           >/github</a
         >
@@ -203,7 +198,7 @@
           location.pathname === "/connect";
         if (hosted) return;
         document.querySelectorAll("[data-connect]").forEach((a) => {
-          a.setAttribute("href", "./fieldwork.html#setup");
+          a.setAttribute("href", "#mcps");
         });
       })();
     </script>

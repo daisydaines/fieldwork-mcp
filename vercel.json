@@ -4,6 +4,7 @@
   "buildCommand": null,
   "outputDirectory": "landing",
   "rewrites": [
-    { "source": "/fieldwork", "destination": "/fieldwork.html" }
+    { "source": "/fieldwork", "destination": "/fieldwork.html" },
+    { "source": "/fieldroutes", "destination": "/fieldroutes.html" }
   ]
 }
