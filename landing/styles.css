@@ -460,7 +460,8 @@ a.dir-row:hover {
 }
 
 .meta-brand-gorilladesk {
-  height: 1.2rem;
+  height: 1.35rem;
+  opacity: 1;
 }
 
 .meta-agents {
